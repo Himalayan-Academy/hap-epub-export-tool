@@ -60,6 +60,8 @@ function extractChapters(epub) {
 
         epub.getChapter(chapter.id, function (err, text) {
             
+            text = text.replace(/"\.\.\//g, "\"");
+            
             var output = template({chapterContent: text});
 
             if (err) {
@@ -69,7 +71,7 @@ function extractChapters(epub) {
                 fs.outputFileSync(file, output);
             }
 
-        }, false);
+        }, true);
     });
 }
 

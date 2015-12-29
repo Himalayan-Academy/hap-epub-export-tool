@@ -1,0 +1,29 @@
+{
+  "name": "hap-epub-export-tool",
+  "version": "1.0.0",
+  "description": "An internal tool used by HAP to convert epubs into static HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soapdog/hap-epub-export-tool.git"
+  },
+  "keywords": [
+    "epub"
+  ],
+  "author": "Andre Alves Garzia <andre@andregarzia.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soapdog/hap-epub-export-tool/issues"
+  },
+  "homepage": "https://github.com/soapdog/hap-epub-export-tool#readme",
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "async": "^1.5.0",
+    "epub": "^0.1.6",
+    "handlebars": "^4.0.5",
+    "node-fs-extra": "^0.8.1"
+  }
+}

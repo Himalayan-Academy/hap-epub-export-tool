@@ -1,18 +1,22 @@
 <html>
-    <head>
-        <meta charset="utf8">
-         <link rel="stylesheet" type="text/css" href="styles/stylesheet.css"/>
-         <link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="styles/page-template.xpgt"/>
-    <style>
-        #bookcontent {
-            width: 80%;
-            margin: auto;
-        }
-       </style>
-    </head>
-    <body>
-        <div id="bookcontent">
-            {{{chapterContent}}}
-        </div>
-    </body>
+<head>
+    <meta charset="utf8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/_style.css"/>
+    <link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="styles/page-template.xpgt"/>
+
+</head>
+<body>
+<div class="controlbar">
+    <h1>{{meta.title}}</h1>
+    <span class="chapter">&mdash; {{chapter.title}}</span>
+    <div class="controls">
+        <a href="{{previous}}"><i class="fa fa-2x fa-arrow-left"></i></a> &nbsp; <a href="{{next}}"><i class="fa fa-2x fa-arrow-right"></i></a>
+    </div>
+</div>
+{{{chapterContent}}}
+
+</body>
 </html>

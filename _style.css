@@ -1,0 +1,48 @@
+.controlbar {
+    -webkit-box-shadow: 0 3px 13px 0 rgba(2, 3, 3, 0.16);
+    box-shadow: 0 3px 13px 0 rgba(2, 3, 3, 0.16);
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 101;
+    top: 0;
+    min-width: 1024px;
+}
+
+.controlbar h1 {
+    display: inline-block;
+    margin: 0;
+}
+
+.controlbar span {
+    display: inline-block;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+.controlbar .controls {
+    float: right;
+    padding-right: 10px;
+}
+
+body {
+    margin-top: 30px;
+
+}
+
+.hundred img {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+
+.illustration img {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.illustration {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+

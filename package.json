@@ -18,12 +18,20 @@
   "bugs": {
     "url": "https://github.com/soapdog/hap-epub-export-tool/issues"
   },
+  "bin": {
+    "epubexport": "./index.js"
+  },
   "homepage": "https://github.com/soapdog/hap-epub-export-tool#readme",
   "dependencies": {
     "adm-zip": "^0.4.7",
     "async": "^1.5.0",
+    "chalk": "^1.1.1",
+    "commander": "^2.9.0",
     "epub": "^0.1.6",
     "handlebars": "^4.0.5",
-    "node-fs-extra": "^0.8.1"
+    "lodash": "^4.2.1",
+    "node-fs-extra": "^0.8.1",
+    "normalize.css": "^3.0.3",
+    "readability-js": "^1.0.6"
   }
 }

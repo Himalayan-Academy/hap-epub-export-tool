@@ -9,10 +9,10 @@ First clone the repository
 $ git clone https://github.com/soapdog/hap-epub-export-tool.git
 ```
 
-Then from inside the folder of the clone repo, link it.
+Then from inside the folder of the clone repo, run the initial setup and link it.
 
 ```
-$ npm link
+$ npm install && npm link
 ```
 
 You will end up with a command line tool called ```epubexport``` which you can call passing the epub file as seen below

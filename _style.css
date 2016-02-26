@@ -46,3 +46,20 @@ body {
     max-width: 100% !important;
 }
 
+/* RESPONSIVE UTILITIES */
+
+@media (max-width: 991px) {
+    .controlbar {
+        background: #fff;
+        position: fixed;
+        width: 100%;
+        z-index: 101;
+        top: 0;
+    }
+
+    .controlbar h1 {
+        font-size: small;
+        display: inline;
+        padding: 0;
+    }
+}

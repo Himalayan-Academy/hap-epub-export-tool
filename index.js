@@ -17,7 +17,9 @@ function copyOverrideFiles() {
     fs.mkdirsSync("web/styles");
     fs.mkdirsSync("web/images");
     fs.copySync("index.html", "web/index.html");
-    fs.copySync("_style.css", "web/styles/index.html");
+    fs.copySync("_style.css", "web/styles/_style.css");
+    fs.copySync("bootstrap.css", "web/styles/bootstrap.css");
+
 }
 
 function extractResources(epubfile) {

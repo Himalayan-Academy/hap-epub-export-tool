@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta charset="utf8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/_style.css"/>
+    <link rel="stylesheet" href="vendor/foundation-6/css/foundation.css" />
+    <link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="styles/page-template.xpgt"/>
+
+</head>
+<body>
+
+<div class="off-canvas-wrapper">
+
+    <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+        <!-- off-canvas title bar for 'small' screen -->
+        <div class="title-bar hap-is-fixed" data-responsive-toggle="widemenu" data-hide-for="medium" data-margin-top="0">
+            <div class="title-bar-left">
+
+                <button class="menu-icon" type="button" data-open="offCanvasLeft"></button>
+
+                <span class="title-bar-title">{{meta.title}}</span>
+
+            </div>
+
+            <div class="title-bar-right">
+
+                <span class="title-bar-title">
+
+
+
+                <a href="{{previous}}"><i class="fa fa-2x fa-arrow-left"></i></a>
+                &nbsp;
+                <a href="{{next}}"><i class="fa fa-2x fa-arrow-right"></i></a>
+                    </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- off-canvas left menu -->
+
+        <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
+
+            <ul class="vertical dropdown menu" data-dropdown-menu>
+
+                {{#each toc}}
+
+                    <li><a href="{{link href}}">{{title}}</a></li>
+
+                {{/each}}
+
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- "wider" top-bar menu for 'medium' and up -->
+
+        <div id="widemenu" class="top-bar hap-is-fixed">
+
+
+            <div class="top-bar-title">
+                <button class="menu-icon dark" type="button" data-open="offCanvasLeft"></button>&nbsp;&nbsp;
+                <b>{{meta.title}}</b> &mdash; {{chapter.title}}
+            </div>
+
+
+            <div class="top-bar-right">
+
+                <div class="controls">
+                    <a href="{{previous}}"><i class="fa fa-lg fa-arrow-left"></i></a>
+                    &nbsp;
+                    <a href="{{next}}"><i class="fa fa-lg fa-arrow-right"></i></a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- original content goes in this container -->
+
+        <div class="off-canvas-content" data-off-canvas-content>
+
+            <div class="row column">
+
+                {{{chapterContent}}}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- close wrapper, no more content after this -->
+
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script src="vendor/foundation-6/js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>

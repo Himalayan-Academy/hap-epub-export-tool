@@ -16,9 +16,10 @@ function copyOverrideFiles() {
     console.log(chalk.bold.green("creating folder structure and copying basic files..."));
     fs.mkdirsSync("web/styles");
     fs.mkdirsSync("web/images");
-    fs.copySync("index.html", "web/index.html");
-    fs.copySync("_style.css", "web/styles/_style.css");
-    fs.copySync("bootstrap.css", "web/styles/bootstrap.css");
+    fs.mkdirsSync("web/vendor");
+    fs.copySync("resources/index.html", "web/index.html");
+    fs.copySync("resources/_style.css", "web/styles/_style.css");
+    fs.copySync("resources/foundation-6", "web/vendor/foundation-6");
 
 }
 
@@ -60,7 +61,7 @@ function extractResources(epubfile) {
 
 function extractChapters(epub) {
     
-    var templateContent = fs.readFileSync("template.hbs");
+    var templateContent = fs.readFileSync("resources/template.hbs");
     var template = handlebars.compile(templateContent.toString());
     
     console.log(chalk.bold.blue("Extracting chapters..."));
@@ -72,6 +73,7 @@ function extractChapters(epub) {
 
         var data = {
             meta: epub.metadata,
+            toc: epub.toc,
             previous: false,
             next: false
         };
@@ -142,7 +144,10 @@ function processEpubContent(epubfile) {
     epub.parse();
 }
 
-
+handlebars.registerHelper('link', function(href) {
+    var url = href.substring(href.lastIndexOf('/')+1)
+    return new handlebars.SafeString(url);
+});
 
 
 program

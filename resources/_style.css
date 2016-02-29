@@ -46,6 +46,13 @@ body {
     max-width: 100% !important;
 }
 
+.hap-is-fixed {
+    width: 100%;
+    max-width: 100%;
+    position: fixed;
+    z-index: 9990;
+}
+
 /* RESPONSIVE UTILITIES */
 
 @media (max-width: 991px) {

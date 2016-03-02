@@ -73,4 +73,9 @@ body {
         display: inline;
         padding: 0;
     }
+
+    .fa-angle-left, .fa-angle-right {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }

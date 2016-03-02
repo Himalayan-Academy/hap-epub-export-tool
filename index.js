@@ -17,9 +17,9 @@ function copyOverrideFiles() {
     fs.mkdirsSync("web/styles");
     fs.mkdirsSync("web/images");
     fs.mkdirsSync("web/vendor");
-    fs.copySync("resources/index.html", "web/index.html");
-    fs.copySync("resources/_style.css", "web/styles/_style.css");
-    fs.copySync("resources/foundation-6", "web/vendor/foundation-6");
+    fs.copySync(__dirname + "/resources/index.html", "web/index.html");
+    fs.copySync(__dirname + "/resources/_style.css", "web/styles/_style.css");
+    fs.copySync(__dirname + "/resources/foundation-6", "web/vendor/foundation-6");
 
 }
 
@@ -60,8 +60,9 @@ function extractResources(epubfile) {
 
 
 function extractChapters(epub) {
-    
-    var templateContent = fs.readFileSync("resources/template.hbs");
+
+    var template = __dirname + "/resources/template.hbs";
+    var templateContent = fs.readFileSync(template);
     var template = handlebars.compile(templateContent.toString());
     
     console.log(chalk.bold.blue("Extracting chapters..."));

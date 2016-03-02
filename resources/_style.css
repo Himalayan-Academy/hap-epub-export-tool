@@ -53,6 +53,10 @@ body {
     z-index: 9990;
 }
 
+.book-content {
+    padding-top: 50px;
+}
+
 /* RESPONSIVE UTILITIES */
 
 @media (max-width: 991px) {

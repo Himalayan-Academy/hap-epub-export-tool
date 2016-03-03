@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
+    <title>{{meta.title}} &mdash; {{chapter.title}}</title>
     <meta charset="utf8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,8 +34,6 @@
 
                 <span class="title-bar-title">
 
-
-
                 <a href="{{previous}}"><i class="fa fa-2x fa-angle-left"></i></a>
                 &nbsp;
                 <a href="{{next}}"><i class="fa fa-2x fa-angle-right"></i></a>
@@ -50,6 +50,8 @@
         <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
 
             <ul class="vertical dropdown menu" data-dropdown-menu>
+
+                <li><div data-bg-color="#f3f3f3" class="rdbWrapper" data-show-read-now="1" data-show-read-later="0" data-show-send-to-kindle="0" data-show-print="0" data-show-email="0" data-orientation="0" data-version="1"></div><script type="text/javascript">(function() {var s = document.getElementsByTagName("script")[0],rdb = document.createElement("script"); rdb.type = "text/javascript"; rdb.async = true; rdb.src = document.location.protocol + "//www.readability.com/embed.js"; s.parentNode.insertBefore(rdb, s); })();</script></li>
 
                 {{#each toc}}
 

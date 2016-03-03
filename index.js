@@ -64,7 +64,7 @@ function extractChapters(epub) {
     var template = __dirname + "/resources/template.hbs";
     var templateContent = fs.readFileSync(template);
     var template = handlebars.compile(templateContent.toString());
-    
+
     console.log(chalk.bold.blue("Extracting chapters..."));
 
     epub.flow.forEach(function (chapter) {
@@ -99,7 +99,7 @@ function extractChapters(epub) {
 
 
         epub.getChapter(chapter.id, function (err, text) {
-            
+
             text = text.replace(/"\.\.\//g, "\"");
 
             text = text.replace(/illustration hundreds/g, "illustration hundred");
@@ -117,7 +117,7 @@ function extractChapters(epub) {
             } else {
                 fs.outputFileSync(file, output);
             }
-            
+
 
 
         }, true);
@@ -126,12 +126,25 @@ function extractChapters(epub) {
 
 }
 
-// Step #1 - open epub
-// TODO: tornar responsivo, colocar js de navegacao no mobile.
+function generateRedirectFile(epub) {
+    console.log(chalk.bold.cyan("Generating spine.csv..."));
+    var data = "";
+    var file = "web/spine.csv";
+
+
+    for(var i = 0, len = epub.flow.length; i < len; i++) {
+        data += (i + 1) + "," + path.basename(epub.flow[i].href) + "\n";
+    }
+
+    fs.outputFileSync(file, data);
+
+    console.log(chalk.bold.green("spine.csv generated."));
+
+}
 
 function processEpubContent(epubfile) {
-    
-    
+
+
     var epub = new EPub(epubfile, "/images/", "/xhtml/");
 
     epub.on("end", function () {
@@ -139,6 +152,7 @@ function processEpubContent(epubfile) {
         console.log(chalk.bold.blue("Title: ") + epub.metadata.title);
 
         extractChapters(epub);
+        generateRedirectFile(epub);
 
     });
 
@@ -154,9 +168,12 @@ handlebars.registerHelper('link', function(href) {
 program
     .version("1.0.0")
     .arguments("<file>")
-    .action(function(epubfile){
+    .action(function(epubfile, options){
         console.log(chalk.bold.green("Processing: ") + epubfile);
+
         extractResources(epubfile);
         processEpubContent(epubfile);
+
+
     })
     .parse(process.argv);

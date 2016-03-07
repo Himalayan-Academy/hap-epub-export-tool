@@ -8,6 +8,7 @@ var path = require('path');
 var _ = require("lodash");
 var program = require('commander');
 var chalk = require('chalk');
+var fileId = "";
 
 function copyOverrideFiles() {
     console.log(chalk.bold.green("removing old folder..."));
@@ -74,6 +75,7 @@ function extractChapters(epub) {
 
         var data = {
             meta: epub.metadata,
+            file_id: fileId,
             toc: epub.toc,
             previous: false,
             next: false
@@ -91,11 +93,16 @@ function extractChapters(epub) {
 
         if (previousTocItem) {
             data.previous = path.basename(previousTocItem.href);
+        } else {
+            data.previous = "#"
         }
 
         if (nextTocItem) {
             data.next = path.basename(nextTocItem.href);
+        } else {
+            data.previous = "#"
         }
+
 
 
         epub.getChapter(chapter.id, function (err, text) {
@@ -165,12 +172,16 @@ handlebars.registerHelper('link', function(href) {
 });
 
 
+
+
 program
     .version("1.0.0")
-    .arguments("<file>")
-    .action(function(epubfile, options){
+    .arguments("<file> <inFileId>")
+    .action(function(epubfile, inFileId, options){
         console.log(chalk.bold.green("Processing: ") + epubfile);
+        console.log(chalk.bold.green("File ID: ") + inFileId);
 
+        fileId = inFileId;
         extractResources(epubfile);
         processEpubContent(epubfile);
 

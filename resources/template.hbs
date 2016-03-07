@@ -51,6 +51,12 @@
 
             <ul class="vertical dropdown menu" data-dropdown-menu>
 
+                <li class="more-info-link">
+                    <a href="/view/{{file_id}}">DOWNLOADS</a>
+                    <span> | </span>
+                    <a href="http://www.himalayanacademy.com">HOME</a>
+                </li>
+
                 <li><div data-bg-color="#f3f3f3" class="rdbWrapper" data-show-read-now="1" data-show-read-later="0" data-show-send-to-kindle="0" data-show-print="0" data-show-email="0" data-orientation="0" data-version="1"></div><script type="text/javascript">(function() {var s = document.getElementsByTagName("script")[0],rdb = document.createElement("script"); rdb.type = "text/javascript"; rdb.async = true; rdb.src = document.location.protocol + "//www.readability.com/embed.js"; s.parentNode.insertBefore(rdb, s); })();</script></li>
 
                 {{#each toc}}
@@ -80,6 +86,8 @@
             <div class="top-bar-right">
 
                 <div class="controls">
+                    <a href="/"><img src="http://dev.himalayanacademy.com/assets/img/khm-logo-final-24px.png" alt="HOME"></a>
+                    &nbsp;&nbsp;
                     <a href="{{previous}}"><i class="fa fa-lg fa-angle-left"></i></a>
                     &nbsp;
                     <a href="{{next}}"><i class="fa fa-lg fa-angle-right"></i></a>

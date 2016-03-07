@@ -57,6 +57,16 @@ body {
     padding-top: 50px;
 }
 
+.more-info-link {
+    background-color: lightgray;
+    border-bottom: solid 1px darkgrey;
+    padding-bottom: 5px;
+}
+
+.more-info-link a {
+    display: inline-block !important;
+}
+
 /* RESPONSIVE UTILITIES */
 
 @media (max-width: 991px) {

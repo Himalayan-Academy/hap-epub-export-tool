@@ -19,6 +19,7 @@ function copyOverrideFiles() {
     fs.mkdirsSync("web/images");
     fs.mkdirsSync("web/vendor");
     fs.copySync(__dirname + "/resources/index.html", "web/index.html");
+    fs.copySync(__dirname + "/resources/logo-24.png", "web/images/logo.png");
     fs.copySync(__dirname + "/resources/_style.css", "web/styles/_style.css");
     fs.copySync(__dirname + "/resources/foundation-6", "web/vendor/foundation-6");
 

@@ -67,6 +67,15 @@ body {
     display: inline-block !important;
 }
 
+.navigation-bar-mobile {
+    display: none;
+}
+
+.fa-angle-left, .fa-angle-right {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 /* RESPONSIVE UTILITIES */
 
 @media (max-width: 991px) {
@@ -84,8 +93,24 @@ body {
         padding: 0;
     }
 
-    .fa-angle-left, .fa-angle-right {
-        padding-left: 10px;
-        padding-right: 10px;
+
+    .hap-logo {
+        top: -9px;
+        margin-bottom: -9px !important;
+        position: relative;
+    }
+
+    .navigation-bar-mobile {
+        display: inline;
+        bottom: 0px !important;
+        height: 40px;
+        background-color: #0a0a0a;
+        position: fixed;
+        z-index: 101;
+        width: 100%;
+    }
+
+    .book-content {
+        padding-bottom: 45px !important;
     }
 }

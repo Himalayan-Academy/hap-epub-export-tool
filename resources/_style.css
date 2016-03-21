@@ -74,6 +74,7 @@ body {
 .fa-angle-left, .fa-angle-right {
     padding-left: 10px;
     padding-right: 10px;
+    color: black;
 }
 
 /* RESPONSIVE UTILITIES */
@@ -112,5 +113,9 @@ body {
 
     .book-content {
         padding-bottom: 45px !important;
+    }
+
+    .fa-angle-left, .fa-angle-right {
+        color: white;
     }
 }

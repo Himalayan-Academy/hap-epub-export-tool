@@ -1,3 +1,8 @@
+body {
+    margin-top: 30px;
+
+}
+
 .controlbar {
     -webkit-box-shadow: 0 3px 13px 0 rgba(2, 3, 3, 0.16);
     box-shadow: 0 3px 13px 0 rgba(2, 3, 3, 0.16);
@@ -25,9 +30,8 @@
     padding-right: 10px;
 }
 
-body {
-    margin-top: 30px;
-
+.controls {
+    width: 110px;
 }
 
 .hundred img {
@@ -52,6 +56,12 @@ body {
     position: fixed;
     z-index: 9990;
 }
+
+.hap-logo {
+    max-height: 28px;
+    width: 28px;
+}
+
 
 .book-content {
     padding-top: 50px;
@@ -79,7 +89,7 @@ body {
 
 /* RESPONSIVE UTILITIES */
 
-@media (max-width: 991px) {
+@media (max-width: 640px) {
     .controlbar {
         background: #fff;
         position: fixed;

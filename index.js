@@ -6,9 +6,26 @@ var fs = require('node-fs-extra');
 var AdmZip = require('adm-zip');
 var path = require('path');
 var _ = require("lodash");
-var program = require('commander');
+var commandLineArgs = require('command-line-args');
 var chalk = require('chalk');
+var child_process = require('child_process');
+
 var fileId = "";
+var imageQuality = 80;
+
+
+function getFilesizeInBytes(filename) {
+ var stats = fs.statSync(filename)
+ var fileSizeInBytes = stats["size"]
+ return fileSizeInBytes
+}
+
+function execSync(command) {
+   var result = child_process.execSync(command, { encoding: 'utf8' });
+   
+   return result;
+   
+}
 
 function copyOverrideFiles() {
     console.log(chalk.bold.green("removing old folder..."));
@@ -29,9 +46,6 @@ function extractResources(epubfile) {
     // reading archives 
     var zip = new AdmZip(epubfile);
     var zipEntries = zip.getEntries(); // an array of ZipEntry records
-
-    copyOverrideFiles();
-
 
     console.log(chalk.bold.cyan("extracting resources..."));
     zipEntries.forEach(function (zipEntry) {
@@ -55,8 +69,24 @@ function extractResources(epubfile) {
         }
 
         zip.extractEntryTo(zipEntry.entryName, outputPath, false, true);
-
+        
         console.log(chalk.bold.cyan("extracting: ") + zipEntry.name); // outputs zip entries information
+
+        if (extension == ".jpg") {
+            var imageFile = outputPath + path.basename(zipEntry.name);
+            var bytes = getFilesizeInBytes(imageFile);
+            if (bytes > 130000) {
+                console.log(chalk.bold.cyan("Processing image... (size: "+bytes+" bytes)"));
+                var command = "/usr/local/Cellar/imagemagick/6.9.3-7/bin/convert '"+ imageFile+"' pnm:- | /usr/local/Cellar/mozjpeg/3.1/bin/cjpeg -quality "+ imageQuality +"  > '"+ imageFile +"_proc' && rm "+imageFile+" && mv '" + imageFile +"_proc' " + "'" + imageFile +"'";
+                
+                console.log(command);
+                
+                var result = execSync(command);
+                
+                console.log(result);
+            }
+        }
+
     });
 }
 
@@ -173,19 +203,51 @@ handlebars.registerHelper('link', function(href) {
 });
 
 
+var appInfo = {
+  title: 'HAP EPub Export Tool',
+  description: 'Generates static HTML from EPub files.',
+  footer: 'Project home: [HAP EPub Export Tool]{http://github.com/soapdog/hap-epub-export-tool}'
+}
+ 
+var appOptions = [
+  { 
+      name: 'extractImages', description: "Extract and optimize images",
+      alias: 'e', type: Boolean 
+  },
+  { 
+      name: 'epubFile', description: "EPub file to be processed (required)", 
+      type: String, defaultOption: true, alias: "b" 
+  },
+  {
+      name: 'fileId', description: "The File ID for the book (required)",
+      type: String, alias: 'i'
+  }
+];
+ 
+var cli = commandLineArgs(appOptions);
+var usage = cli.getUsage(appInfo, appOptions);
+var options = cli.parse();
 
 
-program
-    .version("1.0.0")
-    .arguments("<file> <inFileId>")
-    .action(function(epubfile, inFileId, options){
-        console.log(chalk.bold.green("Processing: ") + epubfile);
-        console.log(chalk.bold.green("File ID: ") + inFileId);
+if (options.epubFile && options.fileId) {
+        
+    console.log(chalk.bold.green("Processing: ") + options.epubFile);
+    console.log(chalk.bold.green("File ID: ") + options.fileId);
 
-        fileId = inFileId;
-        extractResources(epubfile);
-        processEpubContent(epubfile);
+    fileId = options.fileId;
+    
+    copyOverrideFiles();
+    
+    if (options.extractImages) {
+        extractResources(options.epubFile);
+    }
+    
+    processEpubContent(options.epubFile);
+  
+    
+    
+} else {
+    console.log(usage);
+    
+}
 
-
-    })
-    .parse(process.argv);

@@ -68,13 +68,22 @@ body {
 }
 
 .more-info-link {
-    background-color: lightgray;
+    background-color: #e0d5bf !important;
     border-bottom: solid 1px darkgrey;
     padding-bottom: 5px;
 }
 
 .more-info-link a {
     display: inline-block !important;
+    color: #8c3945;
+}
+
+.is-toc-item {
+    color: #8c3945;
+}
+
+.has-hap-background {
+        background-color: #f0e4cd !important;
 }
 
 .navigation-bar-mobile {

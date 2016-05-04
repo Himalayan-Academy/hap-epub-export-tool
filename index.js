@@ -74,13 +74,11 @@ function extractResources(epubfile) {
 
         if (extension == ".jpg") {
             var imageFile = outputPath + path.basename(zipEntry.name);
-            
-            imageFile = imageFile.replace(/\(/g, '\(');
-            
+                        
             var bytes = getFilesizeInBytes(imageFile);
             if (bytes > 130000) {
                 console.log(chalk.bold.cyan("Processing image... (size: "+bytes+" bytes)"));
-                var command = "/usr/local/Cellar/imagemagick/6.9.3-7/bin/convert '"+ imageFile+"' pnm:- | /usr/local/Cellar/mozjpeg/3.1/bin/cjpeg -quality "+ imageQuality +"  > '"+ imageFile +"_proc' && rm "+imageFile+" && mv '" + imageFile +"_proc' " + "'" + imageFile +"'";
+                var command = "/usr/local/Cellar/imagemagick/6.9.3-7/bin/convert \""+ imageFile+"\" pnm:- | /usr/local/Cellar/mozjpeg/3.1/bin/cjpeg -quality "+ imageQuality +"  > '"+ imageFile +"_proc' && rm \""+imageFile+"\" && mv \"" + imageFile +"_proc\" " + "\"" + imageFile +"\"";
                 
                 console.log(command);
                 

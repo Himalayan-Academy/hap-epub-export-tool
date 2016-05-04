@@ -74,6 +74,9 @@ function extractResources(epubfile) {
 
         if (extension == ".jpg") {
             var imageFile = outputPath + path.basename(zipEntry.name);
+            
+            imageFile = imageFile.replace(/\(/g, '\(');
+            
             var bytes = getFilesizeInBytes(imageFile);
             if (bytes > 130000) {
                 console.log(chalk.bold.cyan("Processing image... (size: "+bytes+" bytes)"));

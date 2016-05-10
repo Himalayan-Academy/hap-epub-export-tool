@@ -3,6 +3,10 @@ body {
 
 }
 
+a:not([href]) {
+    color: black !important;
+}
+
 .controlbar {
     -webkit-box-shadow: 0 3px 13px 0 rgba(2, 3, 3, 0.16);
     box-shadow: 0 3px 13px 0 rgba(2, 3, 3, 0.16);

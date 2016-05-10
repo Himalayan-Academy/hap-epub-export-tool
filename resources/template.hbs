@@ -44,9 +44,13 @@
 
         <div class="navigation-bar-mobile">
             <div class="float-right">
+                {{#if previous}}
                 <a href="{{previous}}"><i class="fa fa-2x fa-angle-left"></i></a>
+                {{/if}}
                 &nbsp;
+                {{#if next}}
                 <a href="{{next}}"><i class="fa fa-2x fa-angle-right"></i></a>
+                {{/if}}
             </div>
         </div>
 
@@ -95,9 +99,13 @@
                 <div class="controls">
                     <a href="/"><img class="hap-logo" src="images/logo.svg" alt="HOME"></a>
                     &nbsp;&nbsp;
+                    {{#if previous}}
                     <a href="{{previous}}"><i class="fa fa-lg fa-angle-left"></i></a>
+                    {{/if}}
                     &nbsp;
+                    {{#if next}}
                     <a href="{{next}}"><i class="fa fa-lg fa-angle-right"></i></a>
+                    {{/if}}
                 </div>
 
             </div>

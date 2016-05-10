@@ -29,16 +29,16 @@ function execSync(command) {
 
 function copyOverrideFiles() {
     console.log(chalk.bold.green("removing old folder..."));
-    fs.removeSync("web");
+    fs.removeSync(fileId + "/web");
 
     console.log(chalk.bold.green("creating folder structure and copying basic files..."));
-    fs.mkdirsSync("web/styles");
-    fs.mkdirsSync("web/images");
-    fs.mkdirsSync("web/vendor");
-    fs.copySync(__dirname + "/resources/index.html", "web/index.html");
-    fs.copySync(__dirname + "/resources/logo.svg", "web/images/logo.svg");
-    fs.copySync(__dirname + "/resources/_style.css", "web/styles/_style.css");
-    fs.copySync(__dirname + "/resources/foundation-6", "web/vendor/foundation-6");
+    fs.mkdirsSync(fileId + "/web/styles");
+    fs.mkdirsSync(fileId + "/web/images");
+    fs.mkdirsSync(fileId + "/web/vendor");
+    fs.copySync(__dirname + "/resources/index.html", fileId + "/web/index.html");
+    fs.copySync(__dirname + "/resources/logo.svg", fileId + "/web/images/logo.svg");
+    fs.copySync(__dirname + "/resources/_style.css", fileId + "/web/styles/_style.css");
+    fs.copySync(__dirname + "/resources/foundation-6", fileId + "/web/vendor/foundation-6");
 
 }
 
@@ -55,12 +55,12 @@ function extractResources(epubfile) {
 
         switch (extension) {
             case ".css":
-                outputPath = "web/styles/";
+                outputPath = fileId + "/web/styles/";
                 break;
 
             case ".jpg":
             case ".png":
-                outputPath = "web/images/";
+                outputPath = fileId + "/web/images/";
                 break;
 
             default:
@@ -103,7 +103,7 @@ function extractChapters(epub) {
     epub.flow.forEach(function (chapter) {
         console.log(chalk.bold.cyan("extracting: ") + chapter.id);
 
-        var file = "web/" + chapter.id + ".html";
+        var file = fileId + "/web/" + chapter.id + ".html";
 
         var data = {
             meta: epub.metadata,
@@ -168,7 +168,7 @@ function extractChapters(epub) {
 function generateRedirectFile(epub) {
     console.log(chalk.bold.cyan("Generating spine.csv..."));
     var data = "";
-    var file = "web/spine.csv";
+    var file = fileId + "/web/spine.csv";
 
 
     for(var i = 0, len = epub.flow.length; i < len; i++) {

@@ -116,7 +116,8 @@ function extractChapters(epub) {
         // find previous and next links
 
         var previousTocItem = _.find(epub.toc, function(o){
-            return o.order == chapter.order - 1;
+            var match = o.order == chapter.order - 1;
+            return match;
         });
 
         var nextTocItem = _.find(epub.toc, function(o){
@@ -126,13 +127,13 @@ function extractChapters(epub) {
         if (previousTocItem) {
             data.previous = path.basename(previousTocItem.href);
         } else {
-            data.previous = "#"
+            data.previous = false;
         }
 
         if (nextTocItem) {
             data.next = path.basename(nextTocItem.href);
         } else {
-            data.previous = "#"
+            data.next = false;
         }
 
 

@@ -214,7 +214,7 @@ var appInfo = {
 var appOptions = [
   { 
       name: 'extractImages', description: "Extract and optimize images",
-      alias: 'e', type: Boolean 
+      alias: 'e', type: Boolean
   },
   { 
       name: 'epubFile', description: "EPub file to be processed (required)", 

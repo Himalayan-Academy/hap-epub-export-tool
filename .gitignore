@@ -1,6 +1,7 @@
 node_modules
 .idea
 .DS_Store
+books
 
 lib-cov
 *.seed

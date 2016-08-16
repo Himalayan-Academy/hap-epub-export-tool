@@ -65,7 +65,6 @@ function extractResources(epubfile) {
 
             default:
                 return;
-                break;
         }
 
         zip.extractEntryTo(zipEntry.entryName, outputPath, false, true);
@@ -77,14 +76,22 @@ function extractResources(epubfile) {
                         
             var bytes = getFilesizeInBytes(imageFile);
             if (bytes > 130000) {
-                console.log(chalk.bold.cyan("Processing image... (size: "+bytes+" bytes)"));
-                var command = "/usr/local/Cellar/imagemagick/6.9.3-7/bin/convert \""+ imageFile+"\" pnm:- | /usr/local/Cellar/mozjpeg/3.1/bin/cjpeg -quality "+ imageQuality +"  > '"+ imageFile +"_proc' && rm \""+imageFile+"\" && mv \"" + imageFile +"_proc\" " + "\"" + imageFile +"\"";
-                
-                console.log(command);
-                
-                var result = execSync(command);
-                
-                console.log(result);
+                var imagemagickcommand = "/usr/local/Cellar/imagemagick/6.9.3-7/bin/convert";
+                var mozjpegcommand = "/usr/local/Cellar/mozjpeg/3.1/bin/cjpeg";
+                if (fs.existsSync(imagemagickcommand) && fs.existsSync(mozjpegcommand)) {
+                    // todo: this is not cross-platform.
+                    // 
+                    // requirements to run: imagemagic convert command and mozjpeg.
+                    //
+                    console.log(chalk.bold.cyan("Processing image... (size: "+bytes+" bytes)"));
+                    var command = "/usr/local/Cellar/imagemagick/6.9.3-7/bin/convert \""+ imageFile+"\" pnm:- | /usr/local/Cellar/mozjpeg/3.1/bin/cjpeg -quality "+ imageQuality +"  > '"+ imageFile +"_proc' && rm \""+imageFile+"\" && mv \"" + imageFile +"_proc\" " + "\"" + imageFile +"\"";
+                    
+                    console.log(command);
+                    
+                    var result = execSync(command);
+                    
+                    console.log(result);
+                }
             }
         }
 
@@ -208,7 +215,7 @@ handlebars.registerHelper('link', function(href) {
 var appInfo = {
   title: 'HAP EPub Export Tool',
   description: 'Generates static HTML from EPub files.',
-  footer: 'Project home: [HAP EPub Export Tool]{http://github.com/soapdog/hap-epub-export-tool}'
+  footer: 'Project home: [HAP EPub Export Tool]{http://github.com/Himalayan-Academy/hap-epub-export-tool}'
 }
  
 var appOptions = [

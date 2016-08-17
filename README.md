@@ -21,17 +21,15 @@ You will end up with a command line tool called ```epubexport```.
 The epubexport tool can be run like:
 
 ```
-$ epubexport -e -i what-is-hinduism what-is-hinduism.epub
+$ epubexport what-is-hinduism
 ```
 
 Or if it is not linked with ```npm link```, it can be run with:
 
 ```
-$ node index.js -e -i what-is-hinduism what-is-hinduism.epub
+$ node index.js what-is-hinduism
 ```
-The ```-e``` means extract images and the ```-i <fileID>``` is used to pass the **file id** of the record to the tool. You **must supply both options** for now. 
-
-This will cause a ```web``` folder to be created on the same folder as you are located. This folder will contain the processed files.
+This will make the tool look into a file called ```books/<fileid>/<fileid>.epub```. This will cause a ```web``` folder to be created on the same folder as the one that contains the epub file. This folder will contain the processed files.
 
 ## Previewing the files
 If you have ```live-server``` installed, you can just navigate to inside the *web* folder and run:

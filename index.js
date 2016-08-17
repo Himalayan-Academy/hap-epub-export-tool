@@ -11,6 +11,7 @@ var chalk = require('chalk');
 var child_process = require('child_process');
 
 var fileId = "";
+var bookpath = "";
 var imageQuality = 80;
 
 
@@ -27,18 +28,18 @@ function execSync(command) {
    
 }
 
-function copyOverrideFiles() {
+function copyOverrideFiles(path) {
     console.log(chalk.bold.green("removing old folder..."));
-    fs.removeSync(fileId + "/web");
+    fs.removeSync(path + "/web");
 
     console.log(chalk.bold.green("creating folder structure and copying basic files..."));
-    fs.mkdirsSync(fileId + "/web/styles");
-    fs.mkdirsSync(fileId + "/web/images");
-    fs.mkdirsSync(fileId + "/web/vendor");
-    fs.copySync(__dirname + "/resources/index.html", fileId + "/web/index.html");
-    fs.copySync(__dirname + "/resources/logo.svg", fileId + "/web/images/logo.svg");
-    fs.copySync(__dirname + "/resources/_style.css", fileId + "/web/styles/_style.css");
-    fs.copySync(__dirname + "/resources/foundation-6", fileId + "/web/vendor/foundation-6");
+    fs.mkdirsSync(path + "/web/styles");
+    fs.mkdirsSync(path + "/web/images");
+    fs.mkdirsSync(path + "/web/vendor");
+    fs.copySync(__dirname + "/resources/index.html", path + "/web/index.html");
+    fs.copySync(__dirname + "/resources/logo.svg", path + "/web/images/logo.svg");
+    fs.copySync(__dirname + "/resources/_style.css", path + "/web/styles/_style.css");
+    fs.copySync(__dirname + "/resources/foundation-6", path + "/web/vendor/foundation-6");
 
 }
 
@@ -55,12 +56,12 @@ function extractResources(epubfile) {
 
         switch (extension) {
             case ".css":
-                outputPath = fileId + "/web/styles/";
+                outputPath = bookpath + "/web/styles/";
                 break;
 
             case ".jpg":
             case ".png":
-                outputPath = fileId + "/web/images/";
+                outputPath = bookpath + "/web/images/";
                 break;
 
             default:
@@ -110,7 +111,7 @@ function extractChapters(epub) {
     epub.flow.forEach(function (chapter) {
         console.log(chalk.bold.cyan("extracting: ") + chapter.id);
 
-        var file = fileId + "/web/" + chapter.id + ".html";
+        var file = bookpath + "/web/" + chapter.id + ".html";
 
         var data = {
             meta: epub.metadata,
@@ -131,14 +132,29 @@ function extractChapters(epub) {
             return o.order == chapter.order + 1;
         });
 
-        if (previousTocItem) {
-            data.previous = path.basename(previousTocItem.href);
+        var currentSpineItem = _.findIndex(epub.flow, function(o){
+            if (o.href == chapter.href) {
+                return true;
+            } else {
+                return false;
+            }
+
+        });
+
+        console.log("current spine item: " + currentSpineItem)
+
+        var previousSpineItem = epub.flow[currentSpineItem - 1] || false;
+        var nextSpineItem =  epub.flow[currentSpineItem + 1] || false;
+
+
+        if (previousSpineItem) {
+            data.previous = path.basename(previousSpineItem.href);
         } else {
             data.previous = false;
         }
 
-        if (nextTocItem) {
-            data.next = path.basename(nextTocItem.href);
+        if (nextSpineItem) {
+            data.next = path.basename(nextSpineItem.href);
         } else {
             data.next = false;
         }
@@ -176,7 +192,7 @@ function extractChapters(epub) {
 function generateRedirectFile(epub) {
     console.log(chalk.bold.cyan("Generating spine.csv..."));
     var data = "";
-    var file = fileId + "/web/spine.csv";
+    var file = bookpath + "/web/spine.csv";
 
 
     for(var i = 0, len = epub.flow.length; i < len; i++) {
@@ -219,17 +235,9 @@ var appInfo = {
 }
  
 var appOptions = [
-  { 
-      name: 'extractImages', description: "Extract and optimize images",
-      alias: 'e', type: Boolean
-  },
-  { 
-      name: 'epubFile', description: "EPub file to be processed (required)", 
-      type: String, defaultOption: true, alias: "b" 
-  },
   {
       name: 'fileId', description: "The File ID for the book (required)",
-      type: String, alias: 'i'
+      type: String, alias: 'i', defaultOption: true
   }
 ];
  
@@ -238,18 +246,19 @@ var usage = cli.getUsage(appInfo, appOptions);
 var options = cli.parse();
 
 
-if (options.epubFile && options.fileId) {
+if (options.fileId) {
+    options.epubFile = "books/" + options.fileId + "/" + options.fileId + ".epub";
         
     console.log(chalk.bold.green("Processing: ") + options.epubFile);
     console.log(chalk.bold.green("File ID: ") + options.fileId);
 
     fileId = options.fileId;
+    bookpath = "books/" + fileId
     
-    copyOverrideFiles();
-    
-    if (options.extractImages) {
-        extractResources(options.epubFile);
-    }
+    copyOverrideFiles(bookpath);
+   
+    extractResources(options.epubFile);
+   
     
     processEpubContent(options.epubFile);
   

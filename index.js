@@ -9,6 +9,7 @@ var _ = require("lodash");
 var commandLineArgs = require('command-line-args');
 var chalk = require('chalk');
 var child_process = require('child_process');
+var cheerio = require('cheerio')
 
 var fileId = "";
 var bookpath = "";
@@ -19,6 +20,30 @@ function getFilesizeInBytes(filename) {
  var stats = fs.statSync(filename)
  var fileSizeInBytes = stats["size"]
  return fileSizeInBytes
+}
+
+function fixSVGCovers(text) {
+    text = text.replace(/svg:/gi,"");
+
+    return text;
+}
+
+function addIDsToParagraphs(text) {
+    var $ = cheerio.load(text);
+    var paragraphSelectors = ["p.indent","p.noindent","p.paraspaceabove","p.paraspaceabove2", "p.quote","p.quotexx","h5.textcenter"];
+    var x = 0;
+
+    paragraphSelectors.forEach(function(selector) {
+        $(selector).each(function(i, elem) {
+            x++;
+            $(this).append(`<a class='para-link' id='para-${x}' href='#para-${x}'>&para;</a>`);
+        });
+    });
+
+  
+
+
+    return $.html();
 }
 
 function execSync(command) {
@@ -40,6 +65,7 @@ function copyOverrideFiles(path) {
     fs.copySync(__dirname + "/resources/logo.svg", path + "/web/images/logo.svg");
     fs.copySync(__dirname + "/resources/_style.css", path + "/web/styles/_style.css");
     fs.copySync(__dirname + "/resources/foundation-6", path + "/web/vendor/foundation-6");
+    fs.copySync(__dirname + "/resources/app.js", path + "/web/vendor/app.js");
 
 }
 
@@ -105,6 +131,7 @@ function extractChapters(epub) {
     var template = __dirname + "/resources/template.hbs";
     var templateContent = fs.readFileSync(template);
     var template = handlebars.compile(templateContent.toString());
+    
 
     console.log(chalk.bold.blue("Extracting chapters..."));
 
@@ -120,6 +147,7 @@ function extractChapters(epub) {
             previous: false,
             next: false
         };
+
 
         // find previous and next links
 
@@ -166,6 +194,13 @@ function extractChapters(epub) {
             text = text.replace(/"\.\.\//g, "\"");
 
             text = text.replace(/illustration hundreds/g, "illustration hundred");
+
+            // AAG: Todo, add span tags in paragraphs
+
+            text = addIDsToParagraphs(text);
+
+            // Fix SVG covers
+            text = fixSVGCovers(text);
 
 
             data.chapterContent = text;

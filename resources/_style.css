@@ -3,6 +3,12 @@ body {
 
 }
 
+.para-link {
+    color: #bcb6b6;
+    font-size: 0.8em;
+    text-decoration: none;
+}
+
 a:not([href]) {
     color: black !important;
 }
@@ -35,7 +41,7 @@ a:not([href]) {
 }
 
 .controls {
-    width: 110px;
+    width: 120px;
 }
 
 .hundred img {

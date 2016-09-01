@@ -51,6 +51,19 @@ The wrapper around the epub is based on a HandlerbarsJS template called ```templ
 # Downloading all epub files
 A script called ```download_all_books.sh``` is provided which will use rsync to create a local ```books``` folder and host all the epubs from our media folder. Since it uses *rsync* to download the files, it will only download new stuff when it syncs again.
 
->PS: It does take a while to run it for the first time
+> **Attention:** It does take a while to run it for the first time.
+
+# Processing all epub files
+The script called ```process_all_books.sh``` will execute ```node index.js <fileid>``` for all books. 
+
+> **Warning:** Many epubs have the wrong filename when you download them from the server. The name should always be the same name as the folder (aka the fileId) plus the ```.epub``` extension. This is not happening for many book and I had to rename them by hand on my local drive.
+
+# Removing all web folders
+The script called ```delete_all_web_folders.sh``` will execute **remove the web folder** from all books. 
+
+# Upload all books
+The script called ```sync_all_books.sh``` uses rsync to sync all books. 
+
+
 
 

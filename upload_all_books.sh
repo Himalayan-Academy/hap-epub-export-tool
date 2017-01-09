@@ -100,6 +100,7 @@ rsync -avz books/our-sacred-earth_ei/web devhap@dev.himalayanacademy.com:public_
 rsync -avz books/our-subtle-energy-highway_ei/web devhap@dev.himalayanacademy.com:public_html/media/books/our-subtle-energy-highway_ei/
 rsync -avz books/pancha-ganapati/web devhap@dev.himalayanacademy.com:public_html/media/books/pancha-ganapati/
 rsync -avz books/parenting-with-love_ei/web devhap@dev.himalayanacademy.com:public_html/media/books/parenting-with-love_ei/
+rsync -avz books/path-to-siva/web devhap@dev.himalayanacademy.com:public_html/media/books/path-to-siva/
 rsync -avz books/raising-children-as-good-hindus_ei/web devhap@dev.himalayanacademy.com:public_html/media/books/raising-children-as-good-hindus_ei/
 rsync -avz books/rites-of-passage_ei/web devhap@dev.himalayanacademy.com:public_html/media/books/rites-of-passage_ei/
 rsync -avz books/sacred-pilgrimage_ei/web devhap@dev.himalayanacademy.com:public_html/media/books/sacred-pilgrimage_ei/

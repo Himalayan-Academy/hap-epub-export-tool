@@ -103,6 +103,7 @@ rm -rf books/our-sacred-earth_ei/web
 rm -rf books/our-subtle-energy-highway_ei/web
 rm -rf books/pancha-ganapati/web
 rm -rf books/parenting-with-love_ei/web
+rm -rf books/path-to-siva/web
 rm -rf books/raising-children-as-good-hindus_ei/web
 rm -rf books/rites-of-passage_ei/web
 rm -rf books/sacred-pilgrimage_ei/web

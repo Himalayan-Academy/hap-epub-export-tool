@@ -101,6 +101,7 @@ node index.js our-sacred-earth_ei
 node index.js our-subtle-energy-highway_ei
 node index.js pancha-ganapati
 node index.js parenting-with-love_ei
+node index.js path-to-siva
 node index.js raising-children-as-good-hindus_ei
 node index.js rites-of-passage_ei
 node index.js sacred-pilgrimage_ei

@@ -13,7 +13,6 @@ lib-cov
 *.gz
 *.epub
 *.zip
-*.txt
 *.livecode
 
 web

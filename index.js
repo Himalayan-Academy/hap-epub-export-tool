@@ -10,10 +10,15 @@ var commandLineArgs = require('command-line-args');
 var chalk = require('chalk');
 var child_process = require('child_process');
 var cheerio = require('cheerio')
+var getJSON = require('get-json')
+var helpers = require('handlebars-helpers')({
+  handlebars: handlebars
+});
 
 var fileId = "";
 var bookpath = "";
 var imageQuality = 80;
+var itemObj = {};
 
 
 function getFilesizeInBytes(filename) {
@@ -66,6 +71,7 @@ function copyOverrideFiles(path) {
     fs.copySync(__dirname + "/resources/_style.css", path + "/web/styles/_style.css");
     fs.copySync(__dirname + "/resources/foundation-6", path + "/web/vendor/foundation-6");
     fs.copySync(__dirname + "/resources/app.js", path + "/web/vendor/app.js");
+    fs.writeFileSync(path + "/web/metadata.json", JSON.stringify(itemObj));
 
 }
 
@@ -141,7 +147,9 @@ function extractChapters(epub) {
         var file = bookpath + "/web/" + chapter.id + ".html";
 
         var data = {
+            chapter: chapter,
             meta: epub.metadata,
+            item: itemObj,
             file_id: fileId,
             toc: epub.toc,
             previous: false,
@@ -262,6 +270,32 @@ handlebars.registerHelper('link', function(href) {
     return new handlebars.SafeString(url);
 });
 
+handlebars.registerHelper('author', function(author) {
+    if (author.indexOf("Sivaya") !== -1) {
+        return new handlebars.SafeString("http://www.himalayanacademy.com/monastery/lineage-philosophy/gurudeva")
+    }
+
+    if (author.indexOf("Bodhinatha") !== -1) {
+        return new handlebars.SafeString("http://dev.himalayanacademy.com/monastery/lineage-philosophy/bodhinatha")
+    }
+
+     if (author.indexOf("Yogaswami") !== -1) {
+        return new handlebars.SafeString("http://dev.himalayanacademy.com/monastery/lineage-philosophy/yogaswami")
+    }
+
+    return new handlebars.SafeString("http://dev.himalayanacademy.com/monastery/lineage-philosophy")
+})
+
+/*handlebars.registerHelper("striptags", function( txt ){
+	// exit now if text is undefined 
+	if(typeof txt == "undefined") return;
+	// the regular expresion
+	var regexp = new RegExp('#([^\\s]*)','g');
+	// replacing the text
+	return txt.replace(regexp, '');
+	
+});*/
+
 
 var appInfo = {
   title: 'HAP EPub Export Tool',
@@ -282,25 +316,36 @@ var options = cli.parse();
 
 
 if (options.fileId) {
-    options.epubFile = "books/" + options.fileId + "/" + options.fileId + ".epub";
-        
-    console.log(chalk.bold.green("Processing: ") + options.epubFile);
-    console.log(chalk.bold.green("File ID: ") + options.fileId);
 
-    fileId = options.fileId;
-    bookpath = "books/" + fileId
+    getJSON("http://dev.himalayanacademy.com/api/index.php/record/" + options.fileId, function(error, response) {
+
+        if (error) {
+            console.log("error: " + error);
+
+        } else {
+            itemObj = response;
+            itemObj.description = itemObj.description.replace(/\n/g, " ");
+            options.epubFile = "books/" + options.fileId + "/" + options.fileId + ".epub";
+                
+            console.log(chalk.bold.green("Processing: ") + options.epubFile);
+            console.log(chalk.bold.green("File ID: ") + options.fileId);
+
+            fileId = options.fileId;
+            bookpath = "books/" + fileId
+            
+            copyOverrideFiles(bookpath);
+        
+            extractResources(options.epubFile);
+        
+            
+            processEpubContent(options.epubFile);
+        }
     
-    copyOverrideFiles(bookpath);
-   
-    extractResources(options.epubFile);
-   
-    
-    processEpubContent(options.epubFile);
-  
-    
-    
+    });    
+        
 } else {
     console.log(usage);
     
-}
+} 
+
 

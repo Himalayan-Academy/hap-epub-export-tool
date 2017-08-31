@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
     <title>{{meta.title}} &mdash; {{chapter.title}}</title>
     <meta charset="utf8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{sanitize item.description}}" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -12,6 +13,27 @@
     <link rel="stylesheet" type="text/css" href="styles/_style.css"/>
     <link rel="stylesheet" href="vendor/foundation-6/css/foundation.css" />
     <link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="styles/page-template.xpgt"/>
+
+    <!-- Open graph tags for books -->
+    <meta property="og:type"        content="books.book" /> 
+    <meta property="og:url"         content="http://www.himalayanacademy.com/media/books/{{file_id}}/web/{{chapter.id}}.html" /> 
+    <meta property="og:title"       content="{{item.title}}" /> 
+    <meta property="og:image"       content="http://www.himalayanacademy.com/media/books/{{file_id}}/{{file_id}}_cover_med.jpg" /> 
+    <meta property="og:description" content="{{sanitize item.description}}" /> 
+    {{#if item.isbn}}
+    <meta property="books:isbn"     content="{{item.isbn}}" /> 
+    {{/if}}
+    <meta property="books:author"   content="{{author item.author}}" />
+
+    <!-- Twitter Card markup-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="http://www.himalayanacademy.com/book/{{file_id}}">
+    <meta name="twitter:title" content="{{item.title}}">
+    <meta name="twitter:description" content="{{sanitize item.description}}">
+    <meta name="twitter:creator" content="{{item.author}}">
+    <!-- Twitter summary card with large image must be at least 280x150px -->
+    <meta name="twitter:image" content="http://www.himalayanacademy.com/media/books/{{file_id}}/{{file_id}}_cover_med.jpg">
+    <meta name="twitter:image:alt" content="book cover">
 
 </head>
 <body>

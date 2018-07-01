@@ -1,0 +1,13 @@
+[package]
+name = "rust-epub-export-tool"
+version = "0.1.0"
+authors = ["andre alves garzia <andre@andregarzia.com>"]
+
+[dependencies]
+epub = "1.1.1"
+handlebars = "0.32.4"
+serde_json = "1.0.20"
+image = "*"
+scraper = "0.7.0"
+tera = "0.11.8"
+lazy_static = "1.0.1"

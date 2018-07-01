@@ -27,10 +27,10 @@ var itemObj = {};
 function logError(lbl, obj) {
     if (obj) {
         console.log(chalk.bold.red(`[${options.fileId}] ${lbl}`, obj))
-        fs.appendFileSync("errors.log", `[${options.fileId}] ${lbl}: ${JSON.stringify(obj)}\n`)        
+        fs.appendFileSync("errors.log", `[${options.fileId}] ${lbl}: ${JSON.stringify(obj)}\n`)
     } else {
         console.log(chalk.bold.red(`[${options.fileId}] ${lbl}`))
-        fs.appendFileSync("errors.log", `[${options.fileId}] ${lbl}\n`)        
+        fs.appendFileSync("errors.log", `[${options.fileId}] ${lbl}\n`)
     }
     process.exit(0)
 }
@@ -47,6 +47,23 @@ function fixSVGCovers(text) {
     return text;
 }
 
+function fixLeadingNumbersInTOC(text) {
+    for (i = 0; i < 99; i++) {
+        let s = i
+        if (i < 10) {
+            s = "0" + i
+        }
+
+        s = `href="${s}_`;
+
+        console.log("replacing", s);
+
+        text = text.replace(s, `href="`);
+    }
+
+    return text;
+}
+
 function addIDsToParagraphs(text) {
     var $ = cheerio.load(text);
     var paragraphSelectors = ["p.indent", "p.noindent", "p.paraspaceabove", "p.paraspaceabove2", "p.quote", "p.quotexx", "h5.textcenter"];
@@ -58,9 +75,6 @@ function addIDsToParagraphs(text) {
             $(this).append(`<a class='para-link' id='para-${x}' href='#para-${x}'>&para;</a>`);
         });
     });
-
-
-
 
     return $.html();
 }
@@ -198,13 +212,13 @@ function extractChapters(epub) {
 
 
         if (previousSpineItem) {
-            data.previous = path.basename(previousSpineItem.href);
+            data.previous = previousSpineItem.id + ".html";
         } else {
             data.previous = false;
         }
 
         if (nextSpineItem) {
-            data.next = path.basename(nextSpineItem.href);
+            data.next = nextSpineItem.id + ".html";
         } else {
             data.next = false;
         }
@@ -229,7 +243,6 @@ function extractChapters(epub) {
             data.chapter = chapter;
 
             var output = template(data);
-
 
             if (err) {
                 console.error(chalk.bold.red("ERROR: ") + err);
@@ -287,6 +300,7 @@ function processEpubContent(epubfile) {
 
 handlebars.registerHelper('link', function (href) {
     var url = href.substring(href.lastIndexOf('/') + 1)
+
     return new handlebars.SafeString(url);
 });
 

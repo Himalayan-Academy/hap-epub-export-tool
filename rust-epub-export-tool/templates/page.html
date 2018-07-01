@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
+  <title>{{meta.title}} &mdash; {{chapter.title}}</title>
+  <meta charset="utf8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{item.description | striptags}}" />
+
+  <!-- Open graph tags for books -->
+  <meta property="og:type" content="books.book" />
+  <meta property="og:url" content="http://www.himalayanacademy.com/media/books/{{file_id}}/web/{{chapter.id}}.html" />
+  <meta property="og:title" content="{{meta.title}}" />
+  <meta property="og:image" content="http://www.himalayanacademy.com/media/books/{{file_id}}/{{file_id}}_cover_med.jpg" />
+  <meta property="og:description" content="{{ item.description | striptags }}" /> {% if item.isbn %}
+  <meta property="books:isbn" content="{{item.isbn}}" /> {% endif %}
+  <meta property="books:author" content="{{meta.author}}" />
+
+  <!-- Twitter Card markup-->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="http://www.himalayanacademy.com/book/{{file_id}}">
+  <meta name="twitter:title" content="{{meta.title}}">
+  <meta name="twitter:description" content="{{ item.description | striptags}}">
+  <meta name="twitter:creator" content="{{meta.author}}">
+  <!-- Twitter summary card with large image must be at least 280x150px -->
+  <meta name="twitter:image" content="http://www.himalayanacademy.com/media/books/{{file_id}}/{{file_id}}_cover_med.jpg">
+  <meta name="twitter:image:alt" content="book cover">
+
+  <link rel="stylesheet" href="resources/stylesheet.css">
+</head>
+
+<body>
+  {{ content | safe}}
+</body>
+
+</html>
